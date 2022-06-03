@@ -25,6 +25,7 @@ hs_err_pid*
 /old
 /otherSolutions
 target/
+bin/
 .settings/
 *.project
 *.classpath
