@@ -1,3 +1,4 @@
+package lection02encapsulation;
 import java.text.DecimalFormat;
 
 public class Chicken {

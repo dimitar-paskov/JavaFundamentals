@@ -1,3 +1,4 @@
+package lection04interfacesandabstraction;
 public class Pet implements Birthable {
     private String birthDate;
     private String name;

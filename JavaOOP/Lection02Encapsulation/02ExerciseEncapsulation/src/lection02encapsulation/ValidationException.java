@@ -1,3 +1,4 @@
+package lection02encapsulation;
 
 public class ValidationException extends Exception {
 

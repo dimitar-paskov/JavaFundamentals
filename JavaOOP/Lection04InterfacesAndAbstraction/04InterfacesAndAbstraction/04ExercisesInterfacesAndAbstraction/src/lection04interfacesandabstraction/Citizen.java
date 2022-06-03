@@ -1,3 +1,4 @@
+package lection04interfacesandabstraction;
 
 
 public class Citizen implements Person, Identifiable, Birthable, Buyer{

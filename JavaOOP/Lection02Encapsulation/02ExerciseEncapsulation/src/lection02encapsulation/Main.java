@@ -1,3 +1,4 @@
+package lection02encapsulation;
 import java.util.*;
 
 public class Main {

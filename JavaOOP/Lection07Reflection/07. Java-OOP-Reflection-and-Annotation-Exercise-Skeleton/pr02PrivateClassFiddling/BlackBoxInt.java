@@ -1,4 +1,4 @@
-package blackBoxInt;
+package pr02PrivateClassFiddling;
 
 /**
  * Created by Venelin on 28.3.2017 г..

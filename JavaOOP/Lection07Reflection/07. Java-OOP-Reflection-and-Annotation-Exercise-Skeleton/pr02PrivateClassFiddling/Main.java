@@ -1,4 +1,4 @@
-package blackBoxInt;
+package pr02PrivateClassFiddling;
 
 import java.io.BufferedReader;
 import java.io.IOException;

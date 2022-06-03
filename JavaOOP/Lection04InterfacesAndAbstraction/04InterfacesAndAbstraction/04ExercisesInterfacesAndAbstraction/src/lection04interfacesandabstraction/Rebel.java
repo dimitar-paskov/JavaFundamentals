@@ -1,3 +1,6 @@
+package lection04interfacesandabstraction;
+
+
 public class Rebel implements Buyer, Person{
     private String name;
     private int age;

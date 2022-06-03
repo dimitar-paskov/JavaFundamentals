@@ -1,3 +1,4 @@
+package lection01;
 import java.util.Scanner;
 
 public class Main {
