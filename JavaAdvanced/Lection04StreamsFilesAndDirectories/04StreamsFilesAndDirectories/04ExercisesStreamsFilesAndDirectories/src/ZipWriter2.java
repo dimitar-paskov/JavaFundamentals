@@ -1,3 +1,4 @@
+
 //https://www.thecoderscorner.com/team-blog/java-and-jvm/63-writing-a-zip-file-in-java-using-zipoutputstream/
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,72 +13,64 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+
 /**
- * This class generates a zip archive containing all the
- * files within constant ZIP_DIR.
- * For this example you'll need to put a few files in the
- * directory ZIP_DIR, and it will generate a zip archive
- * containing all those files in the location OUTPUT_ZIP.
- * Minimum Java version: 8
+ * This class generates a zip archive containing all the files within constant
+ * ZIP_DIR. For this example you'll need to put a few files in the directory
+ * ZIP_DIR, and it will generate a zip archive containing all those files in the
+ * location OUTPUT_ZIP. Minimum Java version: 8
  */
 public class ZipWriter2 {
-    private final static Logger LOG = Logger.getLogger("Zip");
+	private final static Logger LOG = Logger.getLogger("Zip");
 
-    public final static String ZIP_DIR = "c:/Dev/temp/zipwrite";
-    public static final String OUTPUT_ZIP = "c:/dev/temp/output.zip";
+	public final static String ZIP_DIR = "c:/Dev/temp/zipwrite";
+	public static final String OUTPUT_ZIP = "c:/dev/temp/output.zip";
 
+	public void createZip(String dirName) {
 
+		Path directory = Paths.get(dirName);
+		File zipFileName = Paths.get(OUTPUT_ZIP).toFile();
 
-    public void createZip(String dirName) {
+		try (ZipOutputStream zipStream = new ZipOutputStream(new FileOutputStream(zipFileName))) {
+			DirectoryStream<Path> dirStream = Files.newDirectoryStream(directory);
+			dirStream.forEach(path -> addToZipFile(path, zipStream));
 
-        Path directory = Paths.get(dirName);
-        File zipFileName = Paths.get(OUTPUT_ZIP).toFile();
+			LOG.info("Zip file created in " + directory.toFile().getPath());
+		} catch (IOException | ZipParsingException e) {
+			LOG.log(Level.SEVERE, "Error while zipping.", e);
+		}
+	}
 
-        try( ZipOutputStream zipStream = new ZipOutputStream(
-                new FileOutputStream(zipFileName)) ) {
-            DirectoryStream<Path> dirStream = Files.newDirectoryStream(directory);
-            dirStream.forEach(path -> addToZipFile(path, zipStream));
+	public void addToZipFile(Path file, ZipOutputStream zipStream) {
+		String inputFileName = file.toFile().getPath();
+		try (FileInputStream inputStream = new FileInputStream(inputFileName)) {
 
-            LOG.info("Zip file created in " + directory.toFile().getPath());
-        }
-        catch(IOException|ZipParsingException e) {
-            LOG.log(Level.SEVERE, "Error while zipping.", e);
-        }
-    }
+			ZipEntry entry = new ZipEntry(file.toFile().getName());
+			entry.setCreationTime(FileTime.fromMillis(file.toFile().lastModified()));
+			entry.setComment("Created by TheCodersCorner");
+			zipStream.putNextEntry(entry);
 
+			LOG.info("Generated new entry for: " + inputFileName);
 
-    public void addToZipFile(Path file, ZipOutputStream zipStream) {
-        String inputFileName = file.toFile().getPath();
-        try (FileInputStream inputStream = new FileInputStream(inputFileName)) {
+			byte[] readBuffer = new byte[2048];
+			int amountRead;
+			int written = 0;
 
-            ZipEntry entry = new ZipEntry(file.toFile().getName());
-            entry.setCreationTime(FileTime.fromMillis(file.toFile().lastModified()));
-            entry.setComment("Created by TheCodersCorner");
-            zipStream.putNextEntry(entry);
+			while ((amountRead = inputStream.read(readBuffer)) > 0) {
+				zipStream.write(readBuffer, 0, amountRead);
+				written += amountRead;
+			}
 
-            LOG.info("Generated new entry for: " + inputFileName);
+			LOG.info("Stored " + written + " bytes to " + inputFileName);
 
-            byte[] readBuffer = new byte[2048];
-            int amountRead;
-            int written = 0;
+		} catch (IOException e) {
+			throw new ZipParsingException("Unable to process " + inputFileName, e);
+		}
+	}
 
-            while ((amountRead = inputStream.read(readBuffer)) > 0) {
-                zipStream.write(readBuffer, 0, amountRead);
-                written += amountRead;
-            }
-
-            LOG.info("Stored " + written + " bytes to " + inputFileName);
-
-
-        }
-        catch(IOException e) {
-            throw new ZipParsingException("Unable to process " + inputFileName, e);
-        }
-    }
-
-    private class ZipParsingException extends RuntimeException {
-        public ZipParsingException(String reason, Exception inner) {
-            super(reason, inner);
-        }
-    }
+	private class ZipParsingException extends RuntimeException {
+		public ZipParsingException(String reason, Exception inner) {
+			super(reason, inner);
+		}
+	}
 }

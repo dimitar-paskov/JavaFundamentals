@@ -1,9 +1,13 @@
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class LabP09SerializeCustomObject {
     public static void main(String[] args) {
 
-        String path = "/media/D/Programming/SoftUni/7.JavaFundamentals/JavaAdvanced/Lection04StreamsFilesAndDirectories/04. Java-Advanced-Files-and-Streams-Lab-Resources/saveCube.txt";
+        String path = "JavaAdvanced/Lection04StreamsFilesAndDirectories/04. Java-Advanced-Files-and-Streams-Lab-Resources/saveCube.ser";
 
 
         Cube cube = new Cube("Green", 15.3, 12.4, 3.0);

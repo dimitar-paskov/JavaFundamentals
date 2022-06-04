@@ -1,10 +1,14 @@
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class EP09CopyAPicture {
     public static void main(String[] args) {
-        String basePath = "/media/D/Documents";
-        String path = basePath + "/10629574_782220328520128_5746665168718511826_n.png";
-        String outPath = basePath + "/JavaCopyOfPic.png";
+        String basePath = "/home/dimitar/Pictures";
+        String path = basePath + "/MineCraftMini_NativeLibrariesAddedForLinux.png";
+        String outPath = basePath + "/MineCraftMini_NativeLibrariesAddedForLinux2.png";
         byte[] buffer = null;
 
 

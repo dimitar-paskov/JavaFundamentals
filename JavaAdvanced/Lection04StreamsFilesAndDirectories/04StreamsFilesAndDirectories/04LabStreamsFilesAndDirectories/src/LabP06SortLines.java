@@ -8,7 +8,7 @@ import java.util.List;
 public class LabP06SortLines {
     public static void main(String[] args) {
 
-        String basePath = "/media/D/Programming/SoftUni/7.JavaFundamentals/JavaAdvanced/Lection04StreamsFilesAndDirectories/04. Java-Advanced-Files-and-Streams-Lab-Resources";
+        String basePath = "JavaAdvanced/Lection04StreamsFilesAndDirectories/04. Java-Advanced-Files-and-Streams-Lab-Resources";
         Path inputPath = Paths.get(basePath + "/input.txt");
         Path outputPath = Paths.get(basePath + "/output.txt");
 
