@@ -2,7 +2,7 @@ package EP07CustomList;
 
 import java.util.ArrayList;
 
-public class CustomArrayLis<T extends Comparable>{
+public class CustomArrayLis<T extends Comparable<T>>{
 	private ArrayList<T> arr;
 	
 	public CustomArrayLis(){
