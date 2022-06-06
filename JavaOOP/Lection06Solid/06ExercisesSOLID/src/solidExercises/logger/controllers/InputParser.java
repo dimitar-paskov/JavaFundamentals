@@ -4,21 +4,17 @@
  */
 package solidExercises.logger.controllers;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 public class InputParser {
 
-	private Scanner scanner;
 
-	public InputParser() {
-		this.scanner = new Scanner(System.in);
-	}
-
-	public String readLoggerInfo() {
-		int n = Integer.parseInt(this.scanner.nextLine());
+	public String readLoggerInfo(BufferedReader br) throws IOException { 
+		int n = Integer.parseInt(br.readLine());
 		StringBuilder sb = new StringBuilder();
 		while (n-- > 0) {
-			sb.append(this.scanner.nextLine()).append(System.lineSeparator());
+			sb.append(br.readLine()).append(System.lineSeparator());
 		}
 		
 		return sb.toString();

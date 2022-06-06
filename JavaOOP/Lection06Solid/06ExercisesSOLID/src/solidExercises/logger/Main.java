@@ -4,25 +4,32 @@
  */
 package solidExercises.logger;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import solidExercises.logger.controllers.EngineImpl;
 import solidExercises.logger.controllers.InputParser;
 import solidExercises.logger.factories.LoggerFactory;
+import solidExercises.logger.interfaces.Engine;
 import solidExercises.logger.interfaces.Factory;
 import solidExercises.logger.interfaces.Logger;
 
 public class Main {
-	
-	private static final Factory<Logger> LOGGER_FACTORY = new LoggerFactory();
 
-	public static void main(String[] args) {
-		
+	private static final Factory<Logger> LOGGER_FACTORY = new LoggerFactory();
+	private static  Engine engine;
+
+	public static void main(String[] args) throws IOException {
+
 		InputParser inputParser = new InputParser();
 		
-		Logger logger = LOGGER_FACTORY.produce(inputParser.readLoggerInfo());
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		
-		
-		System.out.println();
-		
+		engine = new EngineImpl(Main.LOGGER_FACTORY.produce(inputParser.readLoggerInfo(br)));
+		engine.run("END", br);
+
+		System.out.println(engine.toString());
 
 //		Layout simpleLayout = new SimpleLayout();
 //		Appender consoleAppender = new ConsoleAppender(simpleLayout);

@@ -4,7 +4,8 @@
  */
 package solidExercises.logger.controllers;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 import solidExercises.logger.enums.ReportLevel;
 import solidExercises.logger.interfaces.Engine;
@@ -14,32 +15,38 @@ public class EngineImpl implements Engine {
 	
 	
 	private Logger logger;
-	private Scanner scanner;
 	
 	public EngineImpl(Logger logger) {
 		this.logger = logger;
-		this.scanner = new Scanner(System.in);
 	}
 
 	@Override
-	public void run(String endString) {
+	public void run(String endString, BufferedReader br) throws IOException { 
 		
-		String input = scanner.nextLine();
+		String input = br.readLine();
 		
 		while(!input.equals(endString)) {
 			
-			String[] tokens = input.split("\\s+");
+			String[] tokens = input.split("\\|");
 			
-			ReportLevel reportLevel = ReportLevel.valueOf(tokens[0]);
+//			ReportLevel reportLevel = ReportLevel.valueOf(tokens[0]);
 			String time = tokens[1];
 			String message = tokens[2];
 			
-			this.logger.logCritical(time, message); 
+			this.logger.log(time, message,ReportLevel.valueOf(tokens[0])); 
 			
 			
-			this.scanner.nextLine();
+			input = br.readLine();
 		}
 		
+		
 	}
+
+	@Override
+	public String toString() {
+		return this.logger.toString();
+	}
+	
+	
 
 }

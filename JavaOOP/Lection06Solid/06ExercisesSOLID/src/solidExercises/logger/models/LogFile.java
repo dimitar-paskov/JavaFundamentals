@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.stream.Stream;
 
 import solidExercises.logger.interfaces.File;
 
@@ -34,6 +33,7 @@ public class LogFile implements File {
 	public boolean write() {
 
 		try {
+			System.out.println("Working Directory = " + System.getProperty("user.dir"));
 			Files.write(Paths.get(this.filePathAndName), this.text.toString().getBytes(), StandardOpenOption.APPEND);
 			return true;
 		} catch (IOException e) {
@@ -54,11 +54,17 @@ public class LogFile implements File {
 	
 	private int calculateSize() {
 		
-		return Stream.of(this.text.toString().toCharArray())
-		.map(String::valueOf)
-		.filter(s -> Character.isAlphabetic(s.charAt(0)))
-		.mapToInt(e -> e.charAt(0))
-		.sum();
+		int size = 0;
+		
+		for (char c : this.text.toString().toCharArray()) {
+			
+			if(Character.isAlphabetic(c)) {
+				size += c;
+			}
+			
+		}
+		
+		return size;
  
 	}
 

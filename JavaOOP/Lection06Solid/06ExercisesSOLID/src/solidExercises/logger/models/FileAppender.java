@@ -34,6 +34,7 @@ public class FileAppender extends AppenderImpl {
 
 		if (this.canAppend(reportLevel)) {
 			file.append(this.getLayout().format(time, message, reportLevel));
+			this.file.write();
 		}
 
 	}
